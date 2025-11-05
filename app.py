@@ -1,15 +1,17 @@
 import streamlit as st
 import hashlib
-import time
-import json
 
-# 1. Función para calcular el hash
-def get_hash(text: str) -> str:
+def get_hash(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
-st.title("Acta digital - generador de hash")
+st.title("Generador de hash")
 
-# 2. Campo de texto
-texto = st.text_area("Escribe el contenido del acta o el texto a firmar:")
+texto = st.text_input("Escribe el texto original:")
 
-
+if st.button("Calcular hash"):
+    if texto.strip():
+        hash_result = get_hash(texto)
+        st.success("Hash generado:")
+        st.code(hash_result)
+    else:
+        st.warning("Escribe algo primero.")
