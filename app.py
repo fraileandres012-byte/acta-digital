@@ -1,20 +1,14 @@
 import streamlit as st
 import hashlib
-import time
-import json
 
-st.title("Acta digital")
+def get_hash(text):
+    return hashlib.sha256(text.encode()).hexdigest()
 
-contenido = st.text_area("Escribe el acta:")
+st.title("Acta digital - prueba de hash")
 
-if st.button("Guardar acta"):
-    ts = time.time()
-    acta = {
-        "contenido": contenido,
-        "timestamp": ts
-    }
-    acta_json = json.dumps(acta, sort_keys=True)
-    acta_hash = hashlib.sha256(acta_json.encode()).hexdigest()
+texto = st.text_input("Escribe algo:")
 
-    st.success("Acta guardada")
-    st.write("Hash del acta:", acta_hash)
+if texto:
+    hash_texto = get_hash(texto)
+    st.write("Hash SHA-256:")
+    st.code(hash_texto)
